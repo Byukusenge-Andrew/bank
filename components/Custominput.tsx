@@ -3,7 +3,7 @@
 import React from 'react'
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { FieldPath, useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -23,7 +23,7 @@ const formSchema = authformSchema('sign-up')
 
 interface Custominput{
     control:Control<z.infer<typeof formSchema>>,
-    name:string,
+    name:FieldPath<z.infer<typeof formSchema>>,
     label:string,
     placeholder:string
 }
