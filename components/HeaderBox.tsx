@@ -1,7 +1,7 @@
 import React from 'react'
 
 const HeaderBox = ({user,type="title",title,  subtext,}:HeaderBoxProps) => {
-  console.log(user)
+  console.log("the user in the headerbox is "+ user)
   return (
     <div className ="header-box">
         <h1 className='header-box-title'>

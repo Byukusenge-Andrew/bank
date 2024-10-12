@@ -13,7 +13,6 @@ import {
 import Custominput from './Custominput'
 import { authformSchema } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
-import SignUp from '@/app/(auth)/sign-up/page'
 import { useRouter } from 'next/navigation'
 import { getLoggedInUser, signIn, signUp } from '@/lib/actions/user.action'
 import PlaidLink from './PlaidLink'
@@ -47,18 +46,18 @@ const AuthForm = ({type}:{type:string}) => {
     if(type === 'sign-up'){
     
         const userData = {
-              firstName : data.firstName!,
+             firstName : data.firstName!,
              lastName : data.lastName!,
-             address1: data.address!,
+             address1: data.address1!,
              city: data.city!,
              state: data.state!,
              postalCode: data.postalCode!,
              dateOfBirth: data.dateOfBirth!,
              ssn: data.ssn!,
-             email: data.email!,
-             password: data.password!,
+             email: data.email,
+             password: data.password,
             }
-        const newUser = await signUp(data);
+        const newUser = await signUp(userData);
       setUser(newUser);
 
       }
@@ -108,11 +107,11 @@ const AuthForm = ({type}:{type:string}) => {
                 </p>
             </div>
         </header>
-    {/* {user?( */}
+    {user?(
         <div className="flex flex-col gap-4">
             <PlaidLink user={user} variant='primary'/>
         </div>
-    {/* ):( */}
+    ):(
         <>
         <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -122,11 +121,11 @@ const AuthForm = ({type}:{type:string}) => {
           <Custominput control={form.control} name="firstName" label="First Name" placeholder="Enter your First Name" />
         <Custominput control={form.control} name="lastName" label="Last Name" placeholder="Enter your Last Name" />  
         </div>
-        <Custominput control={form.control} name="address" label="Address" placeholder="Enter your Address" />
+        <Custominput control={form.control} name="address1" label="Address" placeholder="Enter your Address" />
         <Custominput control={form.control} name="city" label="City" placeholder="Enter your City" />
 
         <div className='flex gap-4'>
-              <Custominput control={form.control} name="postalcode" label="Postal Code" placeholder="Example 1101" />
+              <Custominput control={form.control} name="postalCode" label="Postal Code" placeholder="Example 1101" />
 
                       <Custominput control={form.control} name="state" label="State" placeholder="Enter your State" />
         </div>
@@ -173,7 +172,7 @@ const AuthForm = ({type}:{type:string}) => {
         </footer>
         </>
 
-    {/* )} */}
+    )} 
     </section>
   )
 }

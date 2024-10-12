@@ -16,7 +16,7 @@ const Footer = ({ user, type = 'desktop' }: FooterProps) => {
     <footer className="footer">
       <div className={type === 'mobile' ? 'footer_name-mobile' : 'footer_name'}>
         <p className="text-xl font-bold text-gray-700">
-        {user?.name ? user.name.split(' ').map(word => word[0]).slice(0, 2).join('') : ''}
+        {user?.firstName[0]}
 
         </p>
       </div>

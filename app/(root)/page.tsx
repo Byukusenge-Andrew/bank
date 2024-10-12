@@ -10,8 +10,8 @@ import { redirect } from 'next/navigation'
 const Home = async () => {
   const loggedIn = await getLoggedInUser()
   
-  console.log(loggedIn)
- console.log(`the firstname is ${loggedIn?.name}` )
+  console.log("the logged in data from headerbox"+loggedIn)
+ console.log(`the firstname is ${loggedIn?.firstName}` )
 
   return (
     <section className='home'>
@@ -20,7 +20,7 @@ const Home = async () => {
        <HeaderBox
         type="greeting"
         title ="Welcome"
-        user ={loggedIn?.name}
+        user ={loggedIn?.firstName}
         subtext= "Access and Manage your accounts and transactions"
 
        />
