@@ -1,18 +1,22 @@
-import React from 'react'
+import React, { unstable_SuspenseList } from 'react'
 import HeaderBox from '@/components/HeaderBox' 
 import TotalBalancebox from '@/components/TotalBalanceBox'
 import RightSidebar from '@/components/RightSidebar'
 import { getLoggedInUser } from '@/lib/actions/user.action'
 import { redirect } from 'next/navigation'
+import { getAccount, getAccounts } from '@/lib/actions/bank.actions'
 
 
 
-const Home = async () => {
+const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
   const loggedIn = await getLoggedInUser()
-  
-  console.log("the logged in data from headerbox"+loggedIn)
- console.log(`the firstname is ${loggedIn?.firstName}` )
+  const accounts =  await getAccounts({userId:loggedIn.$Id})
+  const accountsdata = accounts?.data
+  if(!accounts) return;
 
+  const appwriteItemId = (id as string ) || accountsdata?.appwriteItemId;
+  const account = await getAccount({appwriteItemId})
+  console.log( "The accounts data is "+accountsdata)
   return (
     <section className='home'>
       <div className='home-content'>
@@ -26,9 +30,9 @@ const Home = async () => {
        />
 
        <TotalBalancebox
-         accounts = {[]}
-         totalBanks = {1}
-         totalCurrentBalance = {1250.35}
+         accounts = {[accountsdata]}
+         totalBanks = {accounts?.totalBanks}
+         totalCurrentBalance = {accounts.totalCurrentBalance}
 
        />
 
@@ -38,8 +42,8 @@ const Home = async () => {
       </div>
 
       <RightSidebar user={loggedIn}
-      transactions = {[]}
-      banks = {[{currentBalance: 1250.35},{currentBalance: 1350.35}]}
+      transactions = {accounts?.transactions}
+      banks = {accountsdata.slice(0,2)}
       />
     </section>
   )
