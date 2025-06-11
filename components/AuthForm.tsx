@@ -68,7 +68,6 @@ const AuthForm = ({type}:{type:string}) => {
         password : data.password,
 
      } )
-     //push user data to login also
 
      if(response)router.push('/')
     
